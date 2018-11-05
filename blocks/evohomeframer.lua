@@ -120,7 +120,7 @@ local function parseframe(raw_frame,raw_frame_length)
     end
     local frame_text=""
       for i = 0 , frame_data_length-1 do
-           frame_text = frame_text .. string.format("%x", frame_data.data[i].value)
+           frame_text = frame_text .. string.format("%02x", frame_data.data[i].value)
       end
       debug.print(frame_text)
     local frame = EvohomeFrameType()
