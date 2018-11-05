@@ -101,7 +101,7 @@ local function parseframe(raw_frame,raw_frame_length)
        debug.printf('Invalid frame length\n')
        return nil
     end
-    local frame_data_length = raw_frame_length/2-4
+    local frame_data_length = raw_frame_length/2-2
     local frame_data = types.Byte.vector(256)
     local n=0
     for i=0,raw_frame_length - 2 do
@@ -119,8 +119,8 @@ local function parseframe(raw_frame,raw_frame_length)
         end
     end
     local frame_text=""
-      for i = 0 , raw_frame_length-1 do
-           frame_text = frame_text .. string.format("%x", raw_frame.data[i].value)
+      for i = 0 , frame_data_length-1 do
+           frame_text = frame_text .. string.format("%x", frame_data.data[i].value)
       end
       debug.print(frame_text)
     local frame = EvohomeFrameType()
