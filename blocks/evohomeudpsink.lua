@@ -26,7 +26,7 @@ function EvohomeUDPSinkBlock:process(x)
 	for j = 0, x.data[i].frame_length -1 do
             frame = frame .. string.char(x.data[i].frame[j])
 	end
-	udp:setsockname('*', '9000')
+	udp:setsockname('*', '0')
         assert(udp:sendto(raw_frame, "127.0.0.1", 8888))
         assert(udp:sendto(frame , "127.0.0.1", 8889))
    end
