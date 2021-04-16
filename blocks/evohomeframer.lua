@@ -125,9 +125,9 @@ local function parseframe(raw_frame,raw_frame_length)
       debug.print(frame_text)
     local frame = EvohomeFrameType()
     frame.frame_length = frame_data_length
-    ffi.C.memcpy(frame.frame, frame_data.data[0], frame_data_length)
+    ffi.copy(frame.frame, frame_data.data[0], frame_data_length)
     frame.raw_frame_length = raw_frame_length
-    ffi.C.memcpy(frame.raw_frame, raw_frame.data[0], raw_frame_length)
+    ffi.copy(frame.raw_frame, raw_frame.data[0], raw_frame_length)
     return frame
 end
 
@@ -139,7 +139,7 @@ function EvohomeFramerBlock:process(x)
         if self.buffer_length < EVOHOME_MAX_LENGTH*10 then
             -- Calculate the maximum number of bits we can shift
             local n = math.min(EVOHOME_MAX_LENGTH*10 - self.buffer_length, x.length-i)
-            ffi.C.memcpy(self.buffer.data[self.buffer_length], x.data[i], n*ffi.sizeof(self.buffer.data[0]))
+            ffi.copy(self.buffer.data[self.buffer_length], x.data[i], n*ffi.sizeof(self.buffer.data[0]))
             i, self.buffer_length = i + n, self.buffer_length + n
         end
         if self.state == EvohomeFramerState.FRAME_SYNC and self.buffer_length >= 20 then
